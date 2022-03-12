@@ -1,8 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import * as dayjs from 'dayjs';
+
+export type DefaultRoute = {
+  message: string;
+  timestamp: string;
+};
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  default(): DefaultRoute {
+    return {
+      message: 'API Teleconsulta',
+      timestamp: dayjs().toISOString(),
+    };
   }
 }
