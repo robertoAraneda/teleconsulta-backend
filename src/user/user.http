@@ -1,0 +1,35 @@
+### GET all users
+GET http://localhost:3000/users
+Accept: application/json
+
+
+### POST user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Roberto",
+  "lastname": "Araneda",
+  "email": "roberto@gmail.com",
+  "password": "12345"
+}
+
+### GET one user
+GET http://localhost:3000/users/3
+Accept: application/json
+
+
+### PATCH one one user
+PATCH http://localhost:3000/users/3
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Roberto editado"
+}
+
+
+### DELETE one user
+DELETE http://localhost:3000/users/1
+Accept: application/json
+
