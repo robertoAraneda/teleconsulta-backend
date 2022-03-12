@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
+import { NotFoundException } from '@nestjs/common';
 
 describe('UserService', () => {
   let userService;
@@ -49,6 +50,35 @@ describe('UserService', () => {
       const result = await userService.getUsers();
       expect(userRepository.find).toHaveBeenCalled();
       expect(result).toEqual('someUsers');
+    });
+  });
+
+  describe('getUser', () => {
+    it('should retrieve a user with an ID', async () => {
+      const mockUser = {
+        name: 'Test name',
+        lastname: 'Test lastname',
+        email: 'Test email',
+        password: 'Test password',
+      };
+      userRepository.findOne.mockResolvedValue(mockUser);
+      const result = await userService.getUser(1);
+      expect(result).toEqual(mockUser);
+      expect(userRepository.findOne).toHaveBeenCalledWith(1);
+    });
+
+    it('throws an error as a user is not found', () => {
+      userRepository.findOne.mockResolvedValue(null);
+      expect(userService.getUser(1)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('deleteUser', () => {
+    it('should delete user', async () => {
+      userRepository.delete.mockResolvedValue(1);
+      expect(userRepository.delete).not.toHaveBeenCalled();
+      await userService.deleteUser(1);
+      expect(userRepository.delete).toHaveBeenCalledWith(1);
     });
   });
 });
