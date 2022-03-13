@@ -8,6 +8,7 @@ describe('UserService', () => {
   let userRepository;
   const mockUserRepository = () => ({
     createUser: jest.fn(),
+    editUser: jest.fn(),
     find: jest.fn(),
     findOne: jest.fn(),
     delete: jest.fn(),
@@ -39,6 +40,31 @@ describe('UserService', () => {
       };
       const result = await userService.createUser(createUserDto);
       expect(userRepository.createUser).toHaveBeenCalledWith(createUserDto);
+      expect(result).toEqual('someUser');
+    });
+  });
+
+  describe('patchUser', () => {
+    it('should patch a user in the database', async () => {
+      const createUserDto = {
+        name: 'sample name',
+        lastname: 'sample lastname',
+        email: 'sample email',
+        password: 'sample password',
+      };
+
+      userRepository.editUser.mockResolvedValue('someUser');
+
+      //find one return an object used for userRepositoty.editUser
+      userRepository.findOne.mockResolvedValue(createUserDto);
+      expect(userRepository.editUser).not.toHaveBeenCalled();
+
+      const result = await userService.editUser(1, createUserDto);
+      expect(userRepository.editUser).toHaveBeenCalledWith(
+        createUserDto,
+        createUserDto,
+      );
+
       expect(result).toEqual('someUser');
     });
   });
