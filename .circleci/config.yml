@@ -19,7 +19,7 @@ jobs:
       - image: circleci/postgres:12.1-alpine
         environment:
          POSTGRES_USER: develop
-         POSTGRES_DB: base_test
+         POSTGRES_DB: teleconsulta_dev
          POSTGRES_PASSWORD: develop
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
