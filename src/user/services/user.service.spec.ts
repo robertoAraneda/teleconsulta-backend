@@ -86,10 +86,7 @@ describe('UserService', () => {
 
       //find one return an object used for userRepositoty.editUser
       const result = await userService.edit(1, createUserDto);
-      expect(userRepository.edit).toHaveBeenCalledWith(
-        createUserDto,
-        createUserDto,
-      );
+      expect(userRepository.edit).toHaveBeenCalledWith(createUserDto, oneUser);
 
       expect(result).toEqual(createUserDto);
     });
@@ -122,7 +119,7 @@ describe('UserService', () => {
     });
   });
 
-  describe('deleteUser', () => {
+  describe('remove()', () => {
     it('should delete user', async () => {
       const returnValue = await userService.remove(1);
       expect(userRepository.delete).toHaveBeenCalledWith(1);
