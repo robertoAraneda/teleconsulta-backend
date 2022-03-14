@@ -16,7 +16,7 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+      entities: [join(__dirname, '**', 'entities/*.entity.{ts,js}')],
       synchronize: true,
     }),
     UserModule,

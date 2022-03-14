@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../entities/user.entity';
 
-@Controller('users')
+@Controller({ path: 'users' })
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -39,7 +39,7 @@ export class UserController {
   }
 
   @Delete('/:id')
-  public remove(@Param('userId') id: number): Promise<void> {
+  public remove(@Param('id') id: number): Promise<void> {
     return this.userService.remove(id);
   }
 }
