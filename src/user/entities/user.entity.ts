@@ -1,9 +1,22 @@
-import { PrimaryGeneratedColumn, BaseEntity, Column, Entity } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity()
-export class User extends BaseEntity {
+@Entity('users')
+export class User {
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  run: string;
 
   @Column()
   name: string;
@@ -16,4 +29,10 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+  createdAt?: string;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+  updatedAt?: string;
 }

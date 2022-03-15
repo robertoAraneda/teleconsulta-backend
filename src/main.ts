@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, VersioningType } from '@nestjs/common';
-import * as config from 'config';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 import helmet from 'helmet';
 
 async function bootstrap() {
@@ -16,8 +16,10 @@ async function bootstrap() {
     type: VersioningType.URI,
     prefix: 'api/v',
   });
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  const PORT = process.env.PORT || config.get('server.port');
+  const PORT = process.env.SERVER_PORT;
 
   await app.listen(PORT);
 

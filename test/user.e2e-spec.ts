@@ -31,6 +31,7 @@ describe('AppController (e2e)', () => {
 
   it('/users (GET)', async () => {
     await userService.store({
+      run: '11111111-1',
       name: 'ROBERTO ALEJANDRO',
       lastname: 'ARANEDA',
       email: 'robaraneda@gmail.com',
@@ -48,6 +49,7 @@ describe('AppController (e2e)', () => {
 
   it('/users (POST)', async () => {
     const createUserDto: CreateUserDto = {
+      run: '11111111-1',
       name: 'ROBERTO ALEJANDRO',
       lastname: 'ARANEDA',
       email: 'robaraneda@gmail.com',
@@ -66,6 +68,7 @@ describe('AppController (e2e)', () => {
 
   it('/users/:id (GET)', async () => {
     const createUserDto: CreateUserDto = {
+      run: '11111111-1',
       name: 'ROBERTO ALEJANDRO',
       lastname: 'ARANEDA',
       email: 'robaraneda@gmail.com',
@@ -86,6 +89,7 @@ describe('AppController (e2e)', () => {
   describe('/users/:id (PATCH)', () => {
     it('It should update an user', async () => {
       const createUserDto: CreateUserDto = {
+        run: '11111111-1',
         name: 'ROBERTO ALEJANDRO',
         lastname: 'ARANEDA',
         email: 'robaraneda@gmail.com',
@@ -128,6 +132,7 @@ describe('AppController (e2e)', () => {
   describe('/users/:id (DELETE)', () => {
     it('It should delete an user', async () => {
       const createUserDto: CreateUserDto = {
+        run: '11111111-1',
         name: 'ROBERTO ALEJANDRO',
         lastname: 'ARANEDA',
         email: 'robaraneda@gmail.com',

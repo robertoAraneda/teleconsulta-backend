@@ -10,6 +10,7 @@ import {
 import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../entities/user.entity';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Controller({ path: 'users' })
 export class UserController {
@@ -30,12 +31,17 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @Get('/run/:run')
+  public findByRun(@Param('run') run: string): Promise<User> {
+    return this.userService.findByRun(run);
+  }
+
   @Patch('/:id')
   public edit(
     @Param('id') id: number,
-    @Body() createUserDto: CreateUserDto,
+    @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.edit(id, createUserDto);
+    return this.userService.edit(id, updateUserDto);
   }
 
   @Delete('/:id')

@@ -5,12 +5,14 @@ import { NotFoundException } from '@nestjs/common';
 
 const userArray = [
   {
+    run: '11111111-1',
     name: 'sample name1 1',
     lastname: 'sample lastname 1',
     email: 'sample email 1',
     password: 'sample password 1',
   },
   {
+    run: '22222222-2',
     name: 'sample name 2',
     lastname: 'sample lastname 2',
     email: 'sample email 2',
@@ -19,6 +21,7 @@ const userArray = [
 ];
 
 const oneUser = {
+  run: '11111111-1',
   name: 'sample name',
   lastname: 'sample lastname',
   email: 'sample email',
@@ -63,6 +66,7 @@ describe('UserService', () => {
   describe('create()', () => {
     it('should save a user in the database', async () => {
       const createUserDto = {
+        run: '11111111-1',
         name: 'sample name',
         lastname: 'sample lastname',
         email: 'sample email',
@@ -70,25 +74,25 @@ describe('UserService', () => {
       };
 
       const result = await userService.store(createUserDto);
-      expect(userRepository.store).toHaveBeenCalledWith(createUserDto);
-      expect(result).toEqual(createUserDto);
+      expect(userRepository.store).toHaveBeenCalledTimes(1);
+      expect(result.run).toEqual(createUserDto.run);
     });
   });
 
   describe('edit()', () => {
     it('should patch a user in the database', async () => {
       const createUserDto = {
+        run: '11111111-1',
         name: 'sample name',
         lastname: 'sample lastname',
         email: 'sample email',
         password: 'sample password',
       };
 
-      //find one return an object used for userRepositoty.editUser
       const result = await userService.edit(1, createUserDto);
-      expect(userRepository.edit).toHaveBeenCalledWith(createUserDto, oneUser);
+      expect(userRepository.edit).toHaveBeenCalledTimes(1);
 
-      expect(result).toEqual(createUserDto);
+      expect(result.run).toEqual(createUserDto.run);
     });
 
     it('throws an error as a user is not found', () => {
@@ -108,6 +112,7 @@ describe('UserService', () => {
   describe('findOne()', () => {
     it('should retrieve a user with an ID', async () => {
       const mockUser = {
+        run: '11111111-1',
         name: 'sample name',
         lastname: 'sample lastname',
         email: 'sample email',
@@ -115,12 +120,30 @@ describe('UserService', () => {
       };
       const result = await userService.findOne(1);
       expect(result).toEqual(mockUser);
-      expect(userRepository.findOne).toHaveBeenCalledWith(1);
+      expect(userRepository.findOne).toHaveBeenCalledTimes(1);
     });
 
-    it('throws an error as a user is not found', () => {
+    it('should retrieve a user with a run', async () => {
+      const mockUser = {
+        run: '11111111-1',
+        name: 'sample name',
+        lastname: 'sample lastname',
+        email: 'sample email',
+        password: 'sample password',
+      };
+      const result = await userService.findByRun();
+      expect(result).toEqual(mockUser);
+      expect(userRepository.findOne).toHaveBeenCalledTimes(1);
+    });
+
+    it('throws an error as a user is not found by ID', () => {
       userRepository.findOne.mockResolvedValue(null);
       expect(userService.findOne(1)).rejects.toThrow(NotFoundException);
+    });
+
+    it('throws an error as a user is not found by run', () => {
+      userRepository.findOne.mockResolvedValue(null);
+      expect(userService.findByRun('run')).rejects.toThrow(NotFoundException);
     });
   });
 

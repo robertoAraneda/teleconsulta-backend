@@ -8,6 +8,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
+  "run": "11111111-1",
   "name": "Roberto",
   "lastname": "Araneda",
   "email": "roberto@gmail.com",
@@ -15,17 +16,18 @@ Content-Type: application/json
 }
 
 ### GET one user
-GET http://localhost:3000/users/3
+GET http://localhost:3000/users/10
 Accept: application/json
 
 
 ### PATCH one one user
-PATCH http://localhost:3000/users/3
+PATCH http://localhost:3000/users/1
 Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Roberto editado"
+  "name": "Roberto editado",
+  "password": "11111"
 }
 
 

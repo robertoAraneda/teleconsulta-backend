@@ -2,12 +2,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserController } from './user.controller';
 import { UserService } from '../services/user.service';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 const createUserDto: CreateUserDto = {
+  run: '11111111-1',
   name: 'firstName #1',
   lastname: 'lastName #1',
   email: 'mail@mail.cl',
   password: 'password',
+};
+
+const updateUserDto: UpdateUserDto = {
+  name: 'updated name',
 };
 
 describe('UserController', () => {
@@ -29,25 +35,39 @@ describe('UserController', () => {
               ),
             edit: jest
               .fn()
-              .mockImplementation((id: number, user: CreateUserDto) =>
+              .mockImplementation((id: number, user: UpdateUserDto) =>
                 Promise.resolve({ id, ...user }),
               ),
             findAll: jest.fn().mockResolvedValue([
               {
+                run: '11111111-1',
                 name: 'firstName #1',
                 lastname: 'lastName #1',
                 email: 'mail@mail.cl',
                 password: 'password',
               },
               {
+                run: '11111111-1',
                 name: 'firstName #2',
                 lastname: 'lastName #2',
                 email: 'mail@mail.cl',
                 password: 'password',
               },
             ]),
+            findByRun: jest.fn().mockImplementation((run: string) =>
+              Promise.resolve({
+                name: 'firstName #1',
+                lastname: 'lastName #1',
+                email: 'mail@mail.cl',
+                password: 'password',
+                id: 1,
+                run,
+              }),
+            ),
+
             findOne: jest.fn().mockImplementation((id: number) =>
               Promise.resolve({
+                run: '11111111-1',
                 name: 'firstName #1',
                 lastname: 'lastName #1',
                 email: 'mail@mail.cl',
@@ -88,26 +108,36 @@ describe('UserController', () => {
   });
 
   describe('findOne()', () => {
-    it('should find a user', () => {
+    it('should find a user by ID', () => {
       expect(userController.findOne(1)).resolves.toEqual({
         name: 'firstName #1',
         lastname: 'lastName #1',
         email: 'mail@mail.cl',
         password: 'password',
+        run: '11111111-1',
         id: 1,
       });
       expect(userService.findOne).toHaveBeenCalled();
+    });
+
+    it('should find a user by run', () => {
+      expect(userController.findByRun('11111111-1')).resolves.toEqual({
+        name: 'firstName #1',
+        lastname: 'lastName #1',
+        email: 'mail@mail.cl',
+        password: 'password',
+        run: '11111111-1',
+        id: 1,
+      });
+      expect(userService.findByRun).toHaveBeenCalled();
     });
   });
 
   describe('edit()', () => {
     it('should edit a user', () => {
-      expect(userController.edit(1, createUserDto)).resolves.toEqual({
-        name: 'firstName #1',
-        lastname: 'lastName #1',
-        email: 'mail@mail.cl',
-        password: 'password',
+      expect(userController.edit(1, updateUserDto)).resolves.toEqual({
         id: 1,
+        name: 'updated name',
       });
       expect(userService.edit).toHaveBeenCalled();
     });

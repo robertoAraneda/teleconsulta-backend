@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,10 +27,10 @@ import { join } from 'path';
       envFilePath: `.env.${process.env.NODE_ENV}`,
       isGlobal: true,
     }),
-
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserModule],
+  providers: [AppService],
 })
 export class AppModule {}
