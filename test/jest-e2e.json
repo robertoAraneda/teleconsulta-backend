@@ -16,9 +16,11 @@
     }
   },
   "verbose": true,
-  "coverageDirectory": "../coverage-e2e",
+  "coverageDirectory": "./coverage-e2e",
   "collectCoverageFrom": [
-    "src/**"
+    "src/**",
+    "!src/config/*.ts",
+    "!src/migration/*.ts"
   ],
   "coveragePathIgnorePatterns": [
     ".module.ts$",

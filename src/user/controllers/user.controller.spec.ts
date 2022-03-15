@@ -27,6 +27,11 @@ describe('UserController', () => {
               .mockImplementation((user: CreateUserDto) =>
                 Promise.resolve({ id: 1, ...user }),
               ),
+            edit: jest
+              .fn()
+              .mockImplementation((id: number, user: CreateUserDto) =>
+                Promise.resolve({ id, ...user }),
+              ),
             findAll: jest.fn().mockResolvedValue([
               {
                 name: 'firstName #1',
@@ -92,6 +97,19 @@ describe('UserController', () => {
         id: 1,
       });
       expect(userService.findOne).toHaveBeenCalled();
+    });
+  });
+
+  describe('edit()', () => {
+    it('should edit a user', () => {
+      expect(userController.edit(1, createUserDto)).resolves.toEqual({
+        name: 'firstName #1',
+        lastname: 'lastName #1',
+        email: 'mail@mail.cl',
+        password: 'password',
+        id: 1,
+      });
+      expect(userService.edit).toHaveBeenCalled();
     });
   });
 

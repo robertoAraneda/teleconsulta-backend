@@ -32,8 +32,8 @@ export class UserController {
 
   @Patch('/:id')
   public edit(
-    @Body() createUserDto: CreateUserDto,
     @Param('id') id: number,
+    @Body() createUserDto: CreateUserDto,
   ): Promise<User> {
     return this.userService.edit(id, createUserDto);
   }

@@ -90,6 +90,11 @@ describe('UserService', () => {
 
       expect(result).toEqual(createUserDto);
     });
+
+    it('throws an error as a user is not found', () => {
+      userRepository.findOne.mockResolvedValue(null);
+      expect(userService.edit(1)).rejects.toThrow(NotFoundException);
+    });
   });
 
   describe('findAll()', () => {
@@ -125,6 +130,11 @@ describe('UserService', () => {
       expect(userRepository.delete).toHaveBeenCalledWith(1);
 
       expect(returnValue).toBeUndefined();
+    });
+
+    it('throws an error as a user is not found', () => {
+      userRepository.findOne.mockResolvedValue(null);
+      expect(userService.remove(1)).rejects.toThrow(NotFoundException);
     });
   });
 });
