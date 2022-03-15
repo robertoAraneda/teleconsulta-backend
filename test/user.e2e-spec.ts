@@ -6,12 +6,12 @@ import { Connection } from 'typeorm';
 import { UserService } from '../src/user/services/user.service';
 import { User } from '../src/user/entities/user.entity';
 import { CreateUserDto } from '../src/user/dto/create-user.dto';
+import { HttpExceptionFilter } from '../src/filters/http-exception.filter';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let connection: Connection;
   let userService: UserService;
-  let user: User;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -22,6 +22,7 @@ describe('AppController (e2e)', () => {
     userService = moduleFixture.get<UserService>(UserService);
     connection = app.get(Connection);
 
+    app.useGlobalFilters(new HttpExceptionFilter());
     await app.init();
   });
 
@@ -66,24 +67,72 @@ describe('AppController (e2e)', () => {
     return response;
   });
 
-  it('/users/:id (GET)', async () => {
-    const createUserDto: CreateUserDto = {
-      run: '11111111-1',
-      name: 'ROBERTO ALEJANDRO',
-      lastname: 'ARANEDA',
-      email: 'robaraneda@gmail.com',
-      password: 'admin',
-    };
+  describe('/users/run/:run', () => {
+    it('It should get an user by run', async () => {
+      const createUserDto: CreateUserDto = {
+        run: '11111111-1',
+        name: 'ROBERTO ALEJANDRO',
+        lastname: 'ARANEDA',
+        email: 'robaraneda@gmail.com',
+        password: 'admin',
+      };
 
-    const responseUser = await userService.store(createUserDto);
+      const responseUser = await userService.store(createUserDto);
 
-    const response = await request(app.getHttpServer())
-      .get('/users/' + responseUser.id)
-      .expect(200);
+      const response = await request(app.getHttpServer())
+        .get('/users/run/' + responseUser.run)
+        .expect(200);
 
-    expect(response.body.id).toEqual(responseUser.id);
+      expect(response.body.id).toEqual(responseUser.id);
 
-    return response;
+      return response;
+    });
+
+    it("It should throw a NotFoundException if user doesn't exist", async () => {
+      const unknownRun = 'unknown run';
+
+      const response = await request(app.getHttpServer())
+        .get(`/users/run/${unknownRun}`)
+        .expect(HttpStatus.NOT_FOUND);
+
+      expect(response.body.message).toEqual('User not found');
+
+      return response;
+    });
+  });
+
+  describe('/users/:id (GET)', () => {
+    it('It should get an user by ID', async () => {
+      const createUserDto: CreateUserDto = {
+        run: '11111111-1',
+        name: 'ROBERTO ALEJANDRO',
+        lastname: 'ARANEDA',
+        email: 'robaraneda@gmail.com',
+        password: 'admin',
+      };
+
+      const responseUser = await userService.store(createUserDto);
+
+      const response = await request(app.getHttpServer())
+        .get('/users/' + responseUser.id)
+        .expect(200);
+
+      expect(response.body.id).toEqual(responseUser.id);
+
+      return response;
+    });
+
+    it("It should throw a NotFoundException if user doesn't exist", async () => {
+      const unknownId = 999;
+
+      const response = await request(app.getHttpServer())
+        .get(`/users/${unknownId}`)
+        .expect(HttpStatus.NOT_FOUND);
+
+      expect(response.body.message).toEqual('User not found');
+
+      return response;
+    });
   });
 
   describe('/users/:id (PATCH)', () => {
@@ -100,7 +149,7 @@ describe('AppController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .patch('/users/' + responseUser.id)
-        .send({ name: 'edited' })
+        .send({ name: 'edited', password: 'admin' })
         .expect(200);
 
       expect(response.body.id).toEqual(responseUser.id);
@@ -115,15 +164,7 @@ describe('AppController (e2e)', () => {
         .patch(`/users/${unknownId}`)
         .expect(HttpStatus.NOT_FOUND);
 
-      const resource: User = response.body;
-
-      const errorResponseExample = {
-        statusCode: 404,
-        message: `User not found`,
-        error: 'Not Found',
-      };
-
-      expect(errorResponseExample).toStrictEqual(resource);
+      expect(response.body.message).toEqual('User not found');
 
       return response;
     });
@@ -156,38 +197,10 @@ describe('AppController (e2e)', () => {
         .delete(`/users/${unknownId}`)
         .expect(HttpStatus.NOT_FOUND);
 
-      const resource: User = response.body;
-
-      const errorResponseExample = {
-        statusCode: 404,
-        message: `User not found`,
-        error: 'Not Found',
-      };
-
-      expect(errorResponseExample).toStrictEqual(resource);
+      expect(response.body.message).toEqual('User not found');
 
       return response;
     });
-  });
-
-  it("It should throw a NotFoundException if user doesn't exist", async () => {
-    const unknownId = 999;
-
-    const response = await request(app.getHttpServer())
-      .get(`/users/${unknownId}`)
-      .expect(HttpStatus.NOT_FOUND);
-
-    const resource: User = response.body;
-
-    const errorResponseExample = {
-      statusCode: 404,
-      message: `User not found`,
-      error: 'Not Found',
-    };
-
-    expect(errorResponseExample).toStrictEqual(resource);
-
-    return response;
   });
 
   afterAll(async () => {

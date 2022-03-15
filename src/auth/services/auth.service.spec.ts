@@ -4,7 +4,8 @@ import { UserService } from '../../user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthLoginDto } from '../dto/auth-login.dto';
-import { UnauthorizedException } from '@nestjs/common';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Not } from 'typeorm';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -68,7 +69,7 @@ describe('AuthService', () => {
       jest.spyOn(bcrypt, 'compare').mockImplementation(async () => false);
 
       try {
-        const userAuth: AuthLoginDto = { run: '15654738-7', password: 'admin' };
+        const userAuth: AuthLoginDto = { run: '11111111-1', password: 'admi' };
         await authService.validateUser(userAuth);
       } catch (e) {
         expect(e).toBeInstanceOf(UnauthorizedException);
@@ -79,7 +80,7 @@ describe('AuthService', () => {
       jest.spyOn(userService, 'findByRun').mockImplementation(async () => null);
 
       try {
-        const userAuth: AuthLoginDto = { run: '15654738-7', password: 'admin' };
+        const userAuth: AuthLoginDto = { run: 'unknown', password: 'admin' };
         await authService.validateUser(userAuth);
       } catch (e) {
         expect(e).toBeInstanceOf(UnauthorizedException);

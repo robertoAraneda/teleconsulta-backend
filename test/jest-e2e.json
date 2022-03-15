@@ -25,6 +25,7 @@
   "coveragePathIgnorePatterns": [
     ".module.ts$",
     ".spec.ts$",
-    "src/main.ts"
+    "src/main.ts",
+    "src/auth/jwt.strategy.ts"
   ]
 }
