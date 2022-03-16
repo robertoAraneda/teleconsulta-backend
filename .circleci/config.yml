@@ -23,8 +23,6 @@ jobs:
          POSTGRES_DB: teleconsulta_e2e
          POSTGRES_PASSWORD: develop
 
-
-
     steps:
       - checkout
       - node/install-packages:
@@ -40,7 +38,7 @@ jobs:
           name: 'Run e2e Tests'
           command: yarn run test:e2e
 
-  buildContainer4Server:
+  publishLatestToHub:
     executor: docker-publisher
 
     steps:
