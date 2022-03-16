@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { Connection } from 'typeorm';
 import { UserService } from '../src/user/services/user.service';
-import { User } from '../src/user/entities/user.entity';
 import { CreateUserDto } from '../src/user/dto/create-user.dto';
 import { HttpExceptionFilter } from '../src/filters/http-exception.filter';
 

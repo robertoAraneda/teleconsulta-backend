@@ -16,12 +16,12 @@ Content-Type: application/json
 }
 
 ### GET one user
-GET http://localhost:3000/users/10
+GET http://localhost:3000/api/v1/users/3
 Accept: application/json
 
 
 ### PATCH one one user
-PATCH http://localhost:3000/users/1
+PATCH http://localhost:3000/api/v1/users/3
 Accept: application/json
 Content-Type: application/json
 
@@ -32,6 +32,6 @@ Content-Type: application/json
 
 
 ### DELETE one user
-DELETE http://localhost:3000/api/v1/users/1
+DELETE http://localhost:3000/api/v1/users/3
 Accept: application/json
 

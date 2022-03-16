@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1647377527754" clover="3.2.0">
-  <project timestamp="1647377527754" name="All files">
-    <metrics statements="125" coveredstatements="125" conditionals="6" coveredconditionals="6" methods="27" coveredmethods="27" elements="158" coveredelements="158" complexity="0" loc="125" ncloc="125" packages="11" files="13" classes="13"/>
+<coverage generated="1647447473446" clover="3.2.0">
+  <project timestamp="1647447473447" name="All files">
+    <metrics statements="125" coveredstatements="125" conditionals="10" coveredconditionals="9" methods="27" coveredmethods="27" elements="162" coveredelements="161" complexity="0" loc="125" ncloc="125" packages="11" files="13" classes="13"/>
     <package name="src">
       <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="app.controller.ts" path="/Users/robertoaraneda/project/minsal/teleconsulta/api-backend/src/app.controller.ts">
@@ -57,9 +57,9 @@
       </file>
     </package>
     <package name="src.auth.services">
-      <metrics statements="14" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <metrics statements="14" coveredstatements="14" conditionals="5" coveredconditionals="4" methods="2" coveredmethods="2"/>
       <file name="auth.service.ts" path="/Users/robertoaraneda/project/minsal/teleconsulta/api-backend/src/auth/services/auth.service.ts">
-        <metrics statements="14" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <metrics statements="14" coveredstatements="14" conditionals="5" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -69,7 +69,7 @@
         <line num="10" count="3" type="stmt"/>
         <line num="14" count="4" type="stmt"/>
         <line num="16" count="4" type="stmt"/>
-        <line num="18" count="3" type="stmt"/>
+        <line num="18" count="3" type="cond" truecount="3" falsecount="1"/>
         <line num="20" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="21" count="1" type="stmt"/>
         <line num="24" count="2" type="stmt"/>

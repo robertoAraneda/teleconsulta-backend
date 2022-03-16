@@ -3,10 +3,10 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "run": "22222222-1",
+  "run": "11111111-1",
   "password": "12345"
 }
 ###
 GET http://localhost:3000/api/v1/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9iZXJ0byIsInN1YiI6MSwiZW1haWwiOiJyb2JlcnRvQGdtYWlsLmNvbSIsImlhdCI6MTY0NzM5Nzg5MywiZXhwIjoxNjQ3Mzk4NDkzfQ.7pfj5DBDHN2uAX3gn3eGJvtswT3mpB-flUuMOwlvEVk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9iZXJ0byIsInN1YiI6MiwiZW1haWwiOiJyb2JlcnRvQGdtYWlsLmNvbSIsImlhdCI6MTY0NzQ0NTc4NiwiZXhwIjoxNjQ3NDQ2Mzg2fQ.DgD6UHSxFUTDPCxB9Scome6NOdSBLSdcX0Po7YHAH1Q
 
