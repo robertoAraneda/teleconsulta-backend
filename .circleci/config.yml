@@ -48,8 +48,8 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker build -t $IMAGE_NAME .
-            docker push $IMAGE_NAME:latest
+            docker build -t robertoaraneda/teleconsulta-backend .
+            docker push robertoaraneda/teleconsulta-backend:latest
 workflows:
   version: 2
   # Below is the definition of your workflow.
@@ -59,6 +59,8 @@ workflows:
   sample:
     jobs:
       - build-and-test
-      - publishLatestToHub
+      - publishLatestToHub:
+          requires:
+            - build-and-test
       # For running simple node tests, you could optionally use the node/test job from the orb to replicate and replace the job above in fewer lines.
       # - node/test
