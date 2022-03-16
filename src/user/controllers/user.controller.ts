@@ -12,7 +12,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../entities/user.entity';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
-@Controller({ path: 'users' })
+@Controller({ path: 'users', version: '1' })
 export class UserController {
   constructor(private userService: UserService) {}
 

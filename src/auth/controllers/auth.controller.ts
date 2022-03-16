@@ -11,7 +11,7 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { AuthLoginDto } from '../dto/auth-login.dto';
 import { AuthService } from '../services/auth.service';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
