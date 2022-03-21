@@ -90,6 +90,8 @@
       "!migration/*.ts",
       "!config/*.ts",
       "!auth/jwt.strategy.ts",
+      "!pipes/*.ts",
+      "!interceptors/*.ts",
       "!filters/*.ts",
       "**/main.ts"
     ],
