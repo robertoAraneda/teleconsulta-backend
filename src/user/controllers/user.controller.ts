@@ -11,6 +11,7 @@ import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../entities/user.entity';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { ParseIntPipe } from '../../pipes/parse-int.pipe';
 
 @Controller({ path: 'users', version: '1' })
 export class UserController {
@@ -27,7 +28,7 @@ export class UserController {
   }
 
   @Get('/:id')
-  public findOne(@Param('id') id: number): Promise<User> {
+  public findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.userService.findOne(id);
   }
 
